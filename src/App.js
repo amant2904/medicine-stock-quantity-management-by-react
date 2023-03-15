@@ -9,14 +9,14 @@ import CartProvider from './Components/Store/CartProvider';
 
 function App() {
   return (
-    <StockContextProvider>
-      <CartProvider>
+    <CartProvider>
+      <StockContextProvider>
         <Header />
         <StockAddingForm />
         <AvailableMedicine />
         <Cart />
-      </CartProvider>
-    </StockContextProvider>
+      </StockContextProvider>
+    </CartProvider>
   );
 }
 

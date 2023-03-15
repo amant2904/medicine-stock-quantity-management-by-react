@@ -3,8 +3,7 @@ import React from "react";
 const StockContext = React.createContext({
     medicines: [],
     medicineUpdate: () => { },
-    medicineAddInCart: () => { },
-    cartItem: null
+    medicineAddInCart: () => { }
 });
 
 export default StockContext;

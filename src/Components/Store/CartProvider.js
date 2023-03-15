@@ -1,36 +1,32 @@
-import React, { useContext, useReducer } from 'react'
+import React, { useReducer } from 'react'
 import CartContext from './cart-context'
-import StockContext from './stock-context'
 
 const cartItemReducer = (state, action) => {
-    // if (action.type === "addInCartList") {
-    //     return {
-    //         items: [...state.items, action.itemDetail]
-    //     }
-    // }
+    if (action.type === "addInCartList") {
+        return {
+            items: [...state.items, action.medicine]
+        }
+    }
     return {
         items: []
     }
 }
 
 export default function CartProvider(props) {
-    // const stkCtx = useContext(StockContext);
 
     const [cartItems, dispatchCartItems] = useReducer(cartItemReducer, {
-        items: [{
-            name: "khkhd",
-            descr: "oiuioui",
-            price: "345"
-        }]
+        items: []
     })
 
-    // if (stkCtx.cartItem !== null) {
-    //     dispatchCartItems({ type: "addInCartList", itemDetail: stkCtx.cartItem });
-    // }
+    const addInCart_handler = (itemDetail) => {
+        dispatchCartItems({ type: "addInCartList", medicine: itemDetail });
+        // console.log(itemDetail);
+    }
 
     return (
         <CartContext.Provider value={{
-            items: cartItems.items
+            items: cartItems.items,
+            addInCart: addInCart_handler
         }}>
             {props.children}
         </CartContext.Provider>

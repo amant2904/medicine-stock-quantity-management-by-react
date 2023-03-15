@@ -1,11 +1,11 @@
-import React, { useCallback, useReducer } from 'react'
+import React, { useCallback, useContext, useReducer } from 'react'
 import StockContext from './stock-context'
+import CartContext from './cart-context'
 
 const medicineReducer_handler = (state, action) => {
     if (action.type === "addInStock") {
         return {
-            items: [...state.items, action.newMedicine],
-            cartItem: null
+            items: [...state.items, action.newMedicine]
         }
     }
     else if (action.type === "addInCart") {
@@ -19,8 +19,7 @@ const medicineReducer_handler = (state, action) => {
             const currQuantity = state.items[checkIndexOfMedicine].quantity;
             state.items[checkIndexOfMedicine].quantity = +currQuantity - 1;
             return {
-                items: state.items,
-                cartItem: state.items[checkIndexOfMedicine]
+                items: state.items
             }
         }
     }
@@ -51,17 +50,22 @@ export default function StockContextProvider(props) {
                 price: "23.89",
                 quantity: 59
             }
-        ],
-        cartItem: null
+        ]
     });
+
+    const cartCtx = useContext(CartContext);
 
     const medicineUpdate = useCallback((obj) => {
         dispatchMedicineInStock({ type: "addInStock", newMedicine: obj })
     }, []);
 
-    const medicineAddInCart = useCallback((id) => {
-        dispatchMedicineInStock({ type: "addInCart", medicineId: id })
-    }, []);
+    const medicineAddInCart = (id) => {
+        dispatchMedicineInStock({ type: "addInCart", medicineId: id });
+        const ItemIndex = medicineInStock.items.findIndex((item) => {
+            return parseFloat(item.id) === parseFloat(id);
+        })
+        cartCtx.addInCart(medicineInStock.items[ItemIndex]);
+    };
 
     return (
         <StockContext.Provider value={{
