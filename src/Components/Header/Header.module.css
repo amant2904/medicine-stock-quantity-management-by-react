@@ -1,0 +1,16 @@
+.navBar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 200px;
+    background-color: red;
+}
+.navHeading{
+    color: white;
+}
+.cartBtn{
+    padding: 10px 30px;
+    border-radius: 15px;
+    background-color: rgb(71, 2, 2);
+    color: white;
+}
