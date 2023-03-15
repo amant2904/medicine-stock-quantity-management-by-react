@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Input from '../../UI/Input'
 import Button from '../../UI/Button';
+import StockContext from '../../Store/stock-context';
 
 export default function StockAddingForm() {
 
@@ -8,6 +9,8 @@ export default function StockAddingForm() {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [quantity, setQuantity] = useState("");
+
+    const stkCtx = useContext(StockContext);
 
     const nameChange_handler = (e) => {
         setMedicineName(e.target.value);
@@ -25,8 +28,15 @@ export default function StockAddingForm() {
         setQuantity(e.target.value);
     }
 
-    const stockSubmit_handler = () => {
-        return;
+    const stockSubmit_handler = (e) => {
+        e.preventDefault();
+        stkCtx.medicineUpdate({
+            id: Math.random(),
+            name: medicineName,
+            descr: description,
+            price: price,
+            quantity: quantity
+        })
     }
 
     return (
@@ -60,7 +70,7 @@ export default function StockAddingForm() {
                     onChange: quantityChange_handler,
                     value: quantity
                 }} />
-                <Button>Add to Stock</Button>
+                <Button type="submit">Add to Stock</Button>
             </form>
         </div>
     )
